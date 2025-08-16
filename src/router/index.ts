@@ -4,6 +4,9 @@ import MoviesView from '../views/MoviesView.vue';
 import TvView from '../views/TvView.vue'; 
 import DetailView from '../views/DetailView.vue';
 import WatchlistView from '../views/WatchlistView.vue';
+import PersonDetailView from '../views/PersonDetailView.vue'; 
+import PeopleView from '../views/PeopleView.vue';
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +38,8 @@ const router = createRouter({
       name: 'watchlist', 
       component: WatchlistView 
     },
+    { path: '/people', name: 'people', component: PeopleView },
+    { path: '/person/:id', name: 'personDetail', component: PersonDetailView }
 
   ],
   scrollBehavior() {

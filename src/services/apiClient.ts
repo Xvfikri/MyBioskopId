@@ -29,6 +29,11 @@ export const getAiringTodayTvShows = () => apiClient.get('/tv/airing_today');
 
 // --- Endpoint for People ---
 export const getPopularPeople = () => apiClient.get('/person/popular');
+export const getPersonDetails = (id: string | number) => {
+  return apiClient.get(`/person/${id}`, {
+    params: { append_to_response: 'combined_credits' }
+  });
+};
 
 export const searchMovies = (query: string, page = 1) => 
   apiClient.get('/search/movie', { params: { query, page } });

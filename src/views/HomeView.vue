@@ -98,7 +98,7 @@ onUnmounted(() => {
       <MediaList title="Airing Today TV Shows" :items="airingTodayTvShows" />
       <MediaList title="On The Air TV Shows" :items="onTheAirTvShows" />
       <MediaList title="Top Rated TV Shows" :items="topRatedTvShows" />
-      <MediaList title="Popular People" :items="popularPeople" />
+      <MediaList title="Popular People" :items="popularPeople" view-more-link="/people" />
     </div>
   </main>
 </template>
