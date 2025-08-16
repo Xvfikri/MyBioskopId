@@ -5,9 +5,10 @@ import { getMediaDetails } from '@/services/apiClient';
 import MediaList from '@/components/media/MediaList.vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 import { useWatchlistStore } from '@/stores/watchlistStore';
+import type { MediaDetails, Video } from '@/types/api'; 
 
 const route = useRoute();
-const details = ref<any>(null);
+const details = ref<MediaDetails | null>(null);
 const isLoading = ref(true);
 const watchlistStore = useWatchlistStore();
 
@@ -39,10 +40,7 @@ const posterUrl = computed(() => {
 });
 
 const officialTrailer = computed(() => {
-  if (details.value?.videos?.results) {
-    return details.value.videos.results.find((v: any) => v.type === 'Trailer' && v.site === 'YouTube');
-  }
-  return null;
+  return details.value?.videos?.results.find((v: Video) => v.type === 'Trailer' && v.site === 'YouTube')
 });
 
 const scrollContainer = ref<HTMLElement | null>(null);
