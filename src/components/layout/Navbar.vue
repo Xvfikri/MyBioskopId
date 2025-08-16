@@ -16,12 +16,10 @@ const isMobileMenuOpen = ref(false);
     <div class="container mx-auto px-4 md:px-8">
       <div class="flex items-center justify-between h-20">
         
-        <!-- Logo -->
         <RouterLink to="/" class="text-white text-2xl font-bold hover:text-yellow-400 transition-colors">
           <span class="text-yellow-400">MyBioskop</span><span class="text-white">Id</span>
         </RouterLink>
 
-        <!-- Desktop Menu -->
         <ul class="hidden md:flex items-center space-x-8">
           <li v-for="link in navLinks" :key="link.name">
             <RouterLink 
@@ -34,7 +32,6 @@ const isMobileMenuOpen = ref(false);
           </li>
         </ul>
 
-        <!-- Mobile Menu Button -->
         <div class="md:hidden">
           <button 
             @click="isMobileMenuOpen = !isMobileMenuOpen"
@@ -48,7 +45,6 @@ const isMobileMenuOpen = ref(false);
 
       </div>
 
-      <!-- Mobile Menu -->
       <div v-if="isMobileMenuOpen" class="md:hidden bg-black/80 backdrop-blur-md rounded-lg mt-2 mb-4">
         <ul class="py-4 space-y-2">
           <li v-for="link in navLinks" :key="link.name">
@@ -68,7 +64,6 @@ const isMobileMenuOpen = ref(false);
 </template>
 
 <style scoped>
-/* Fallback styles jika Tailwind tidak load */
 nav {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(12px);
