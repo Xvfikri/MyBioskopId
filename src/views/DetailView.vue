@@ -4,10 +4,12 @@ import { useRoute } from 'vue-router';
 import { getMediaDetails } from '@/services/apiClient';
 import MediaList from '@/components/media/MediaList.vue';
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
+import { useWatchlistStore } from '@/stores/watchlistStore';
 
 const route = useRoute();
 const details = ref<any>(null);
 const isLoading = ref(true);
+const watchlistStore = useWatchlistStore();
 
 const fetchDetails = async (type: 'movie' | 'tv', id: string) => {
   isLoading.value = true;
@@ -87,6 +89,11 @@ watch(() => route.params, (newParams) => {
             </div>
             <p class="mt-4 text-gray-300 max-w-3xl">{{ details.overview }}</p>
           </div>
+        </div>
+        <div class="mt-4 flex items-center gap-4">
+            <button @click="watchlistStore.toggleWatchlist(details)" class="...">
+                {{ watchlistStore.isInWatchlist(details.id) ? 'Remove from Watchlist' : 'Add to Watchlist' }}
+            </button>
         </div>
 
         <div class="mt-16">

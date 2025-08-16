@@ -6,6 +6,7 @@ const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Movies', path: '/movies' },
   { name: 'Series', path: '/tv' },
+  { name: 'Watchlist', path: '/watchlist' },
 ];
 
 const isMobileMenuOpen = ref(false);
