@@ -3,13 +3,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-// Menentukan 'props' yang akan diterima oleh komponen ini dari parent-nya.
-// Kita menggunakan TypeScript untuk mendefinisikan tipe datanya.
 const props = defineProps({
   item: {
     type: Object,
     required: true,
-    // Default value untuk memastikan tidak ada error jika item kosong
     default: () => ({
       id: 0,
       title: 'Default Title',
@@ -20,14 +17,10 @@ const props = defineProps({
   },
 });
 
-// TMDB API memberikan path gambar, bukan URL lengkap.
-// Computed property ini membuat URL gambar yang valid.
 const posterUrl = computed(() => {
   if (props.item.poster_path) {
     return `https://image.tmdb.org/t/p/w500${props.item.poster_path}`;
   }
-  // Sediakan gambar placeholder jika tidak ada poster
-//   return 'https://via.placeholder.com/500x750?text=No+Image';
 });
 </script>
 
@@ -56,5 +49,4 @@ const posterUrl = computed(() => {
 </template>
 
 <style scoped>
-/* Anda bisa menambahkan style khusus di sini jika diperlukan */
 </style>

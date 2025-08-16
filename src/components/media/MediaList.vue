@@ -1,10 +1,11 @@
 // src/components/media/MediaList.vue
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import MediaCard from './MediaCard.vue';
 import type { PropType } from 'vue';
+import { RouterLink } from 'vue-router';
 
-// Definisikan tipe data untuk item media agar lebih aman dengan TypeScript
 interface MediaItem {
   id: number;
   title?: string;
@@ -16,38 +17,76 @@ interface MediaItem {
 }
 
 defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  items: {
-    type: Array as PropType<MediaItem[]>,
-    required: true,
-  },
+  title: { type: String, required: true },
+  items: { type: Array as PropType<MediaItem[]>, required: true },
+  viewMoreLink: { type: String, default: '' },
 });
+
+
+const scrollContainer = ref<HTMLElement | null>(null);
+
+const scroll = (direction: 'left' | 'right') => {
+  if (scrollContainer.value) {
+    const scrollAmount = scrollContainer.value.clientWidth * 0.8; 
+    
+    scrollContainer.value.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth', 
+    });
+  }
+};
 </script>
 
 <template>
-  <section class="mb-8">
-    <h2 class="text-2xl font-bold text-white mb-4">{{ title }}</h2>
-    <div class="flex overflow-x-auto space-x-4 pb-4">
-      <div v-for="item in items" :key="item.id" class="flex-shrink-0 w-48">
-        <MediaCard :item="item" />
+  <section class="mb-8 relative group">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold text-white">{{ title }}</h2>
+      <RouterLink
+        v-if="viewMoreLink"
+        :to="viewMoreLink"
+        class="border border-gray-500 text-gray-300 rounded-full px-4 py-1 text-sm font-semibold hover:bg-yellow-500 hover:text-black hover:border-yellow-500 transition-all duration-300"
+      >
+        View more
+      </RouterLink>
+    </div>
+
+    <div class="relative">
+      <div 
+        ref="scrollContainer"
+        class="flex overflow-x-auto space-x-4 pb-4 scrollbar-hide"
+      >
+        <div v-for="item in items" :key="item.id" class="flex-shrink-0 w-48 md:w-56">
+          <MediaCard :item="item" />
+        </div>
       </div>
+
+      <button 
+        @click="scroll('left')"
+        class="absolute top-1/2 -translate-y-1/2 left-0 w-12 h-full bg-gradient-to-r from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button 
+        @click="scroll('right')"
+        class="absolute top-1/2 -translate-y-1/2 right-0 w-12 h-full bg-gradient-to-l from-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 flex items-center justify-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
   </section>
 </template>
 
 <style scoped>
-/* Kustomisasi scrollbar agar lebih menarik (opsional) */
-.overflow-x-auto::-webkit-scrollbar {
-  height: 8px;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
-.overflow-x-auto::-webkit-scrollbar-thumb {
-  background-color: #4a5568; /* gray-700 */
-  border-radius: 4px;
-}
-.overflow-x-auto::-webkit-scrollbar-track {
-  background-color: #2d3748; /* gray-800 */
+.scrollbar-hide {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 </style>
