@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MoviesView from '../views/MoviesView.vue'; 
 import TvView from '../views/TvView.vue'; 
+import DetailView from '../views/DetailView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +21,15 @@ const router = createRouter({
       path: '/tv', 
       name: 'tv', 
       component: TvView 
-    }
+    },
+    { path: '/movie/:id', 
+      name: 'movieDetail', 
+      component: DetailView 
+    },
+    { path: '/tv/:id', 
+      name: 'tvDetail', 
+      component: DetailView 
+    },
   ],
   scrollBehavior() {
     return { top: 0 };

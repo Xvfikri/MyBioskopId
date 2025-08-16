@@ -1,5 +1,3 @@
-// src/views/HomeView.vue
-
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import MediaList from '@/components/media/MediaList.vue';
@@ -24,7 +22,8 @@ let heroInterval: number;
 
 const currentHeroItem = computed(() => {
   if (popularMovies.value.length > 0) {
-    return popularMovies.value[currentHeroIndex.value];
+    const item = popularMovies.value[currentHeroIndex.value];
+    return item;
   }
   return null;
 });
@@ -37,7 +36,7 @@ const fetchAllContent = async () => {
       popularTvRes, 
       topRatedTvRes
     ] = await Promise.all([
-      getPopularMovies(),
+      getPopularMovies(1), 
       getTopRatedMovies(),
       getPopularTvShows(),
       getTopRatedTvShows()

@@ -10,18 +10,24 @@ const apiClient = axios.create({
 export const getTopRatedMovies = () => apiClient.get('/movie/top_rated');
 export const getUpcomingMovies = () => apiClient.get('/movie/upcoming');
 export const getNowPlayingMovies = () => apiClient.get('/movie/now_playing');
-export const getPopularMovies = (page = 1) => 
-  apiClient.get('/movie/popular', { params: { page } });
+export const getPopularMovies = (page = 1) => apiClient.get('/movie/popular', { params: { page, append_to_response: 'videos' } });
 
+export const getHeroMovies = () => 
+  apiClient.get('/movie/popular', { 
+    params: { 
+      page: 1,
+      append_to_response: 'videos'
+    } 
+  });
 
-// --- Endpoint untuk TV Shows ---
+// --- Endpoint for TV Shows ---
 export const getPopularTvShows = (page = 1) => 
   apiClient.get('/tv/popular', { params: { page } });
 export const getTopRatedTvShows = () => apiClient.get('/tv/top_rated');
 export const getOnTheAirTvShows = () => apiClient.get('/tv/on_the_air');
 export const getAiringTodayTvShows = () => apiClient.get('/tv/airing_today');
 
-// --- Endpoint untuk People ---
+// --- Endpoint for People ---
 export const getPopularPeople = () => apiClient.get('/person/popular');
 
 export const searchMovies = (query: string, page = 1) => 
@@ -29,6 +35,16 @@ export const searchMovies = (query: string, page = 1) =>
 
 export const searchTvShows = (query: string, page = 1) => 
   apiClient.get('/search/tv', { params: { query, page } });
+
+
+// Endpoint Details View
+export const getMediaDetails = (type: 'movie' | 'tv', id: string) => {
+  return apiClient.get(`/${type}/${id}`, {
+    params: {
+      append_to_response: 'videos,credits,similar'
+    }
+  });
+};
 
 
 export default apiClient;
