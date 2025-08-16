@@ -88,12 +88,34 @@ watch(() => route.params, (newParams) => {
               <span v-for="genre in details.genres" :key="genre.id" class="border border-gray-600 text-xs px-3 py-1 rounded-full">{{ genre.name }}</span>
             </div>
             <p class="mt-4 text-gray-300 max-w-3xl">{{ details.overview }}</p>
+            <div class="mt-6">
+                <button
+                @click="watchlistStore.toggleWatchlist(details)"
+                :class="[
+                    'flex items-center gap-x-2 font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105',
+                    { 
+                    'bg-yellow-500 text-black hover:bg-yellow-600': !watchlistStore.isInWatchlist(details.id),
+                    'bg-gray-700 text-white hover:bg-gray-600': watchlistStore.isInWatchlist(details.id)
+                    }
+                ]"
+                >
+                <span v-if="watchlistStore.isInWatchlist(details.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </span>
+                <span v-else>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-3.13L5 18V4z" />
+                    </svg>
+                </span>
+                
+                <span>
+                    {{ watchlistStore.isInWatchlist(details.id) ? 'Added to Watchlist' : 'Add to Watchlist' }}
+                </span>
+                </button>
+            </div>
           </div>
-        </div>
-        <div class="mt-4 flex items-center gap-4">
-            <button @click="watchlistStore.toggleWatchlist(details)" class="...">
-                {{ watchlistStore.isInWatchlist(details.id) ? 'Remove from Watchlist' : 'Add to Watchlist' }}
-            </button>
         </div>
 
         <div class="mt-16">
